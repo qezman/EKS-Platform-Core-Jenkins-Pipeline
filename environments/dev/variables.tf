@@ -1,0 +1,29 @@
+variable "region" {
+  description = "AWS region for all resources"
+  default     = "us-east-1"
+  type        = string
+}
+
+variable "project" {
+  description = "Project name used as a prefix on all resources"
+  default     = "eks-platform"
+  type        = string
+}
+
+variable "environment" {
+  description = "Environment name"
+  default     = "dev"
+  type        = string
+}
+
+variable "vpc_cidr" {
+  description = "CIDR block for the VPC"
+  type        = string
+  default     = "10.0.0.0/16"
+}
+
+variable "availability_zones" {
+  description = "List of availability zones to deploy into"
+  type        = list(string)
+  default     = ["us-east-1a", "us-east-1b"]
+}
