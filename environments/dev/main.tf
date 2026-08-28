@@ -20,3 +20,8 @@ module "eks" {
   account_id         = var.account_id
   admin_cidr         = var.admin_cidr
 }
+
+module "addons" {
+  source        = "../../modules/addons"
+  node_group_id = module.eks.node_group_id
+}

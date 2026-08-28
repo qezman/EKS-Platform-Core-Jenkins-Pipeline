@@ -32,3 +32,8 @@ output "node_security_group_id" {
   description = "Security group ID attached to EKS worker nodes"
   value       = data.aws_security_group.node.id
 }
+
+output "node_group_id" {
+  description = "EKS node group ID"
+  value       = aws_eks_node_group.main.id
+}
