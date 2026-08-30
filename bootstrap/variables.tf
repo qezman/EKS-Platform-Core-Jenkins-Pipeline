@@ -7,7 +7,7 @@ variable "aws_region" {
 variable "state_bucket_name" {
   description = "Unique S3 bucket name for Terraform state"
   type        = string
-  default     = "eks-platform-terraform-state-203637463799"
+  default     = "eks-platform-terraform-state-722965867897"
 }
 
 variable "lock_table_name" {

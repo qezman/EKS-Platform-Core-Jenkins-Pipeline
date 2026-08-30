@@ -10,7 +10,7 @@ terraform {
 
 provider "aws" {
   region  = var.aws_region
-  profile = "eks-platform"
+  profile = "eks-platform-new"
 }
 
 resource "aws_s3_bucket" "terraform_state" {
