@@ -6,12 +6,16 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "~> 3.0"
+    }
   }
 }
 
 provider "aws" {
   region  = var.region
-  profile = "eks-platform"
+  profile = "eks-platform-new"
 
   default_tags {
     tags = {
@@ -33,4 +37,10 @@ provider "helm" {
     token                  = data.aws_eks_cluster_auth.main.token
 
   }
+}
+
+provider "kubernetes" {
+  host                   = module.eks.cluster_endpoint
+  cluster_ca_certificate = base64decode(module.eks.cluster_ca_certificate)
+  token                  = data.aws_eks_cluster_auth.main.token
 }

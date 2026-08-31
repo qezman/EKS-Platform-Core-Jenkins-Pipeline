@@ -22,6 +22,9 @@ module "eks" {
 }
 
 module "addons" {
-  source        = "../../modules/addons"
-  node_group_id = module.eks.node_group_id
+  source            = "../../modules/addons"
+  node_group_id     = module.eks.node_group_id
+  cluster_name      = module.eks.cluster_name
+  oidc_provider_arn = module.eks.oidc_provider_arn
+  oidc_provider_url = module.eks.oidc_provider_url
 }
