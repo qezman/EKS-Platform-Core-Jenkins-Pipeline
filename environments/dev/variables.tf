@@ -49,3 +49,8 @@ variable "admin_cidr" {
   description = "Admin IP allowed to access the EKS API"
   type        = string
 }
+
+variable "jenkins_ssh_public_key" {
+  description = "SSH public key for Jenkins EC2 access"
+  type        = string
+}

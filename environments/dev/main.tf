@@ -28,3 +28,14 @@ module "addons" {
   oidc_provider_arn = module.eks.oidc_provider_arn
   oidc_provider_url = module.eks.oidc_provider_url
 }
+
+module "jenkins" {
+  source                 = "../../modules/jenkins"
+  project                = var.project
+  environment            = var.environment
+  vpc_id                 = module.vpc.vpc_id
+  subnet_id              = module.vpc.public_subnet_ids[0]
+  instance_type          = "t3.small"
+  jenkins_ssh_public_key = var.jenkins_ssh_public_key
+  admin_cidr             = var.admin_cidr
+}
