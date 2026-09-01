@@ -54,3 +54,9 @@ variable "jenkins_ssh_public_key" {
   description = "SSH public key for Jenkins EC2 access"
   type        = string
 }
+
+variable "terraform_state_bucket" {
+  description = "Name of the S3 bucket for Terraform state"
+  type        = string
+  default     = "eks-platform-terraform-state-722965867897"
+}

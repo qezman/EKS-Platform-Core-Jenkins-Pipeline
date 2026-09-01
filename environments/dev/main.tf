@@ -38,4 +38,5 @@ module "jenkins" {
   instance_type          = "t3.small"
   jenkins_ssh_public_key = var.jenkins_ssh_public_key
   admin_cidr             = var.admin_cidr
+  terraform_state_bucket = var.terraform_state_bucket
 }

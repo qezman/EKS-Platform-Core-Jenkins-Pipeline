@@ -4,3 +4,8 @@
 *.tfvars
 crash.log
 .terraform.lock.hcl
+environments/dev/main.tf.bak
+environments/dev/provider.tf.bak
+modules/addons/main.tf.bak
+modules/addons/variables.tf.bak
+docs

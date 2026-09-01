@@ -33,3 +33,8 @@ variable "admin_cidr" {
   description = "Admin IP allowed to access the Jenkins EC2 instance"
   type        = string
 }
+
+variable "terraform_state_bucket" {
+  description = "Name of the S3 bucket for Terraform state"
+  type        = string
+}
