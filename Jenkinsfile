@@ -2,12 +2,10 @@ pipeline {
     agent any
 
     environment {
-        environment {
         TF_DIR = "environments/dev"
         AWS_DEFAULT_REGION = "us-east-1"
         GIT_REPO_OWNER = "qezman"
         GIT_REPO_NAME = "EKS-Platform-Core-Jenkins-Pipeline"
-        }
     }
 
     stages {
@@ -56,6 +54,13 @@ pipeline {
                 dir("${TF_DIR}") {
                     sh 'terraform apply -auto-approve'
                 }
+            }
+        }
+
+
+        stage('Manual Approval') {
+            steps {
+                input message: 'Apply this Terraform plan?', ok: 'Apply'
             }
         }
 
