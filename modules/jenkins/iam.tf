@@ -83,7 +83,9 @@ data "aws_iam_policy_document" "terraform_deployer" {
       "ec2:DescribeAvailabilityZones",
       "ec2:DescribeImages",
       "ec2:DescribeInstanceCreditSpecifications",
-      "ec2:ModifyInstanceCreditSpecification"
+      "ec2:ModifyInstanceCreditSpecification",
+      "ec2:UpdateSecurityGroupRuleDescriptionsIngress",
+      "ec2:UpdateSecurityGroupRuleDescriptionsEgress",
     ]
     resources = ["*"]
   }
