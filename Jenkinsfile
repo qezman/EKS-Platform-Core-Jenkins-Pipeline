@@ -23,8 +23,13 @@ pipeline {
         stage('Plan') {
             steps {
                 dir("${TF_DIR}") {
-                    sh 'terraform init'
-                    sh 'terraform plan -no-color -out=tfplan | tee plan_output.txt'
+                    withCredentials([file(credentialsId: 'tf-tfvars', variable: 'TFVARS_FILE')]) {
+                        sh '''#!/bin/bash
+                            set -euo pipefail
+                            cp "$TFVARS_FILE" terraform.tfvars
+                            terraform plan -no-color -out=tfplan | tee plan_output.txt
+                        '''
+                    }
                 }
             }
         }

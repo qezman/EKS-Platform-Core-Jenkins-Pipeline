@@ -5,7 +5,7 @@ resource "helm_release" "kube_prometheus_stack" {
   version          = "88.3.0"
   namespace        = "monitoring"
   create_namespace = true
-  timeout = 1200
+  timeout          = 1200
 
   values = [
     yamlencode({
