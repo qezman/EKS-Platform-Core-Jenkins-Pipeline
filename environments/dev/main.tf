@@ -40,3 +40,13 @@ module "jenkins" {
   admin_cidr             = var.admin_cidr
   terraform_state_bucket = var.terraform_state_bucket
 }
+
+resource "aws_security_group_rule" "jenkins_to_eks_control_plane" {
+  description              = "Allow Jenkins to reach the EKS API server (private endpoint) for terraform/kubectl/helm"
+  type                     = "ingress"
+  from_port                = 443
+  to_port                  = 443
+  protocol                 = "tcp"
+  security_group_id        = module.eks.cluster_security_group_id
+  source_security_group_id = module.jenkins.jenkins_security_group_id
+}
