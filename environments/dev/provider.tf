@@ -15,7 +15,6 @@ terraform {
 
 provider "aws" {
   region  = var.region
-  profile = "eks-platform-new"
 
   default_tags {
     tags = {
