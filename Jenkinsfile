@@ -26,6 +26,7 @@ pipeline {
                     withCredentials([file(credentialsId: 'tf-tfvars', variable: 'TFVARS_FILE')]) {
                         sh '''#!/bin/bash
                             set -euo pipefail
+                            rm -f terraform.tfvars
                             cp "$TFVARS_FILE" terraform.tfvars
                             terraform plan -no-color -out=tfplan | tee plan_output.txt
                         '''
