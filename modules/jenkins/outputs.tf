@@ -17,8 +17,3 @@ output "jenkins_key_fingerprint" {
   description = "Fingerprint of the SSH key pair attached to the Jenkins instance"
   value       = aws_key_pair.jenkins.fingerprint
 }
-
-output "jenkins_security_group_id" {
-  description = "ID of the Jenkins EC2 instance's security group"
-  value       = aws_security_group.jenkins.id
-}

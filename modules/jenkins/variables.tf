@@ -38,3 +38,13 @@ variable "terraform_state_bucket" {
   description = "Name of the S3 bucket for Terraform state"
   type        = string
 }
+
+variable "cluster_name" {
+  description = "EKS cluster Jenkins deploys to (grants it an EKS access entry)"
+  type        = string
+}
+
+variable "cluster_security_group_id" {
+  description = "EKS cluster's security group (grants Jenkins network access to the control plane's private endpoint)"
+  type        = string
+}

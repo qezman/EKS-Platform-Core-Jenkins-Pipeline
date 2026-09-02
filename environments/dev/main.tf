@@ -30,23 +30,15 @@ module "addons" {
 }
 
 module "jenkins" {
-  source                 = "../../modules/jenkins"
-  project                = var.project
-  environment            = var.environment
-  vpc_id                 = module.vpc.vpc_id
-  subnet_id              = module.vpc.public_subnet_ids[0]
-  instance_type          = "t3.small"
-  jenkins_ssh_public_key = var.jenkins_ssh_public_key
-  admin_cidr             = var.admin_cidr
-  terraform_state_bucket = var.terraform_state_bucket
-}
-
-resource "aws_security_group_rule" "jenkins_to_eks_control_plane" {
-  description              = "Allow Jenkins to reach the EKS API server (private endpoint) for terraform/kubectl/helm"
-  type                     = "ingress"
-  from_port                = 443
-  to_port                  = 443
-  protocol                 = "tcp"
-  security_group_id        = module.eks.cluster_security_group_id
-  source_security_group_id = module.jenkins.jenkins_security_group_id
+  source                    = "../../modules/jenkins"
+  project                   = var.project
+  environment               = var.environment
+  vpc_id                    = module.vpc.vpc_id
+  subnet_id                 = module.vpc.public_subnet_ids[0]
+  instance_type             = "t3.small"
+  jenkins_ssh_public_key    = var.jenkins_ssh_public_key
+  admin_cidr                = var.admin_cidr
+  terraform_state_bucket    = var.terraform_state_bucket
+  cluster_name              = module.eks.cluster_name
+  cluster_security_group_id = module.eks.cluster_security_group_id
 }
