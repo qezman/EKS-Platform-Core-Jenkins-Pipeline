@@ -9,10 +9,11 @@ output "jenkins_public_dns" {
 }
 
 output "jenkins_role_arn" {
-  value = aws_iam_role.jenkins.arn
+  description = "ARN of the Jenkins EC2 instance's IAM role"
+  value       = aws_iam_role.jenkins.arn
 }
 
-output "jenkins_ssh_public_key" {
-  description = "SSH public key for Jenkins EC2 access"
+output "jenkins_key_fingerprint" {
+  description = "Fingerprint of the SSH key pair attached to the Jenkins instance"
   value       = aws_key_pair.jenkins.fingerprint
 }

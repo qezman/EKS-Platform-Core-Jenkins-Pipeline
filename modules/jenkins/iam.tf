@@ -1,3 +1,5 @@
+data "aws_caller_identity" "current" {}
+
 data "aws_iam_policy_document" "terraform_deployer" {
   statement {
     sid    = "S3StateBackend"
@@ -107,14 +109,13 @@ data "aws_iam_policy_document" "terraform_deployer" {
     ]
     resources = ["*"]
   }
-
   statement {
     sid     = "PassRoleScoped"
     effect  = "Allow"
     actions = ["iam:PassRole"]
     resources = [
-      "arn:aws:iam::722965867897:role/eks-platform-dev-eks-cluster-role",
-      "arn:aws:iam::722965867897:role/eks-platform-dev-eks-node-role"
+      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.project}-${var.environment}-eks-cluster-role",
+      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.project}-${var.environment}-eks-node-role"
     ]
   }
 
@@ -206,4 +207,39 @@ data "aws_iam_policy_document" "terraform_deployer" {
     ]
     resources = ["*"]
   }
+}
+
+resource "aws_iam_policy" "terraform_deployer" {
+  name   = "${var.project}-${var.environment}-terraform-deployer-policy"
+  policy = data.aws_iam_policy_document.terraform_deployer.json
+}
+
+resource "aws_iam_role" "jenkins" {
+  name = "${var.project}-${var.environment}-jenkins-role"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
+  tags = {
+    Name        = "${var.project}-${var.environment}-jenkins-role"
+    Environment = var.environment
+  }
+}
+
+resource "aws_iam_role_policy_attachment" "jenkins_deployer_policy" {
+  role       = aws_iam_role.jenkins.name
+  policy_arn = aws_iam_policy.terraform_deployer.arn
+}
+
+resource "aws_iam_instance_profile" "jenkins" {
+  name = "${var.project}-${var.environment}-jenkins-profile"
+  role = aws_iam_role.jenkins.name
 }
