@@ -9,6 +9,7 @@ pipeline {
     }
 
     stages {
+
         stage('Lint') {
             steps {
                 dir("${TF_DIR}") {
@@ -49,18 +50,17 @@ pipeline {
             }
         }
 
-        stage('Apply') {
-            steps {
-                dir("${TF_DIR}") {
-                    sh 'terraform apply -auto-approve'
-                }
-            }
-        }
-
-
         stage('Manual Approval') {
             steps {
                 input message: 'Apply this Terraform plan?', ok: 'Apply'
+            }
+        }
+
+        stage('Apply') {
+            steps {
+                dir("${TF_DIR}") {
+                    sh 'terraform apply -auto-approve tfplan'
+                }
             }
         }
 
@@ -75,14 +75,14 @@ pipeline {
                 }
             }
         }
+    }
 
-        post {
-            failure {
-                echo 'Pipeline failed (check the stage logs above)'
-            }
-            success {
-                echo 'Pipeline completed successfully'
-            }
+    post {
+        failure {
+            echo 'Pipeline failed (check the stage logs above)'
+        }
+        success {
+            echo 'Pipeline completed successfully.'
         }
     }
 }
