@@ -15,6 +15,9 @@ resource "helm_release" "kube_prometheus_stack" {
           storageClassName = "gp3"
           size             = "5Gi"
         }
+        strategy = {
+          type = "Recreate"
+        }
       }
       prometheus = {
         prometheusSpec = {

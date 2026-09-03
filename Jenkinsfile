@@ -77,10 +77,11 @@ pipeline {
                     sh '''#!/bin/bash
                         set -euo pipefail
                         aws eks update-kubeconfig --name eks-platform-new-dev --region us-east-1
-                        helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-                        helm repo update
-                        helm upgrade kube-prometheus-stack prometheus-community/kube-prometheus-stack \
-                        --namespace monitoring --reuse-values
+                        echo "=== Verifying kube-prometheus-stack rollout status ==="
+                        kubectl rollout status deployment/kube-prometheus-stack-grafana -n monitoring --timeout=180s
+                        kubectl rollout status deployment/kube-prometheus-stack-operator -n monitoring --timeout=180s
+                        kubectl rollout status statefulset/prometheus-kube-prometheus-stack-prometheus -n monitoring --timeout=180s
+                        echo "=== All monitoring components healthy ==="
                     '''
                 }
             }
