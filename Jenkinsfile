@@ -74,10 +74,13 @@ pipeline {
         stage('Helm Upgrade') {
             steps {
                 dir("${TF_DIR}") {
-                    sh '''
+                    sh '''#!/bin/bash
+                        set -euo pipefail
                         aws eks update-kubeconfig --name eks-platform-new-dev --region us-east-1
+                        helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+                        helm repo update
                         helm upgrade kube-prometheus-stack prometheus-community/kube-prometheus-stack \
-                          --namespace monitoring --reuse-values
+                        --namespace monitoring --reuse-values
                     '''
                 }
             }
