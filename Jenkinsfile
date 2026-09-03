@@ -28,6 +28,7 @@ pipeline {
                             set -euo pipefail
                             rm -f terraform.tfvars
                             cp "$TFVARS_FILE" terraform.tfvars
+                            terraform init -reconfigure
                             terraform plan -no-color -out=tfplan | tee plan_output.txt
                         '''
                     }
