@@ -10,3 +10,4 @@ modules/addons/main.tf.bak
 modules/addons/variables.tf.bak
 docs
 environments/dev/.terraform
+NOTES.md
